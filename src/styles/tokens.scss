@@ -1,0 +1,29 @@
+/* Shared foundations; 青屿 is approved. paper/sky tokens are historical proposals. */
+.prototype {
+  --font-sans: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-serif: 'Songti SC', 'STSong', 'SimSun', serif;
+  --color-error: #b2413e;
+  --color-success: #2e6754;
+  --color-warning: #8c5e25;
+  --fast: 120ms;
+  --normal: 220ms;
+  --radius-small: 12rpx;
+  --radius: 32rpx;
+  --radius-large: 44rpx;
+  --page-gutter: 40rpx;
+  --wot-color-theme: var(--accent);
+  --wot-button-primary-bg-color: var(--accent);
+  --wot-button-primary-color: #fff;
+  --wot-button-info-bg-color: var(--soft);
+  --wot-button-info-color: var(--ink);
+  --wot-button-medium-height: 100rpx;
+  --wot-button-medium-fs: 28rpx;
+  --wot-button-medium-radius: var(--radius);
+}
+.theme-fern { --bg:#f6f8f4; --surface:#fff; --soft:#eaf0e8; --accent:#346c57; --accent-soft:#e2ece2; --ink:#263d32; --muted:#657366; --line:#dce4d9; --hero:#e8eee2; --card-shadow:0 8rpx 30rpx rgba(37,67,47,.025); }
+.theme-paper { --bg:#f7f4ed; --surface:#fffcf7; --soft:#ece9e0; --accent:#525c78; --accent-soft:#e6e8ed; --ink:#30342f; --muted:#6e7069; --line:#d7d8ce; --hero:#ebe8de; --radius:8rpx; --radius-large:12rpx; --page-gutter:44rpx; --card-shadow:none; }
+.theme-sky { --bg:#f3f5fa; --surface:#fff; --soft:#e9eef8; --accent:#4864a6; --accent-soft:#e4eaf7; --ink:#283955; --muted:#647189; --line:#dbe1ed; --hero:#e4eafa; --radius:28rpx; --radius-large:40rpx; --page-gutter:36rpx; --card-shadow:0 8rpx 30rpx rgba(42,67,110,.035); }
+.reduced-motion { --fast:0ms; --normal:0ms; }
+/* #ifdef H5 */
+@media (prefers-reduced-motion: reduce) { .prototype { --fast:0ms; --normal:0ms; } .prototype *, .prototype *::before, .prototype *::after { animation-duration:0.01ms!important; transition-duration:0.01ms!important; } }
+/* #endif */

@@ -1,0 +1,27 @@
+{
+  "name": "轻简履",
+  "appid": "",
+  "description": "青屿 · 简历小程序前端体验版",
+  "versionName": "0.2.0",
+  "versionCode": "200",
+  "transformPx": false,
+  "vueVersion": "3",
+  "mp-weixin": {
+    "appid": "wxdccead0ec32190d0",
+    "setting": {
+      "urlCheck": true,
+      "es6": true,
+      "minified": true
+    },
+    "usingComponents": true
+  },
+  "h5": {
+    "title": "轻简履 · 青屿前端体验",
+    "router": {
+      "mode": "hash"
+    }
+  },
+  "uniStatistics": {
+    "enable": false
+  }
+}

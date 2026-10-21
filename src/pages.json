@@ -1,0 +1,213 @@
+{
+  "easycom": {
+    "autoscan": true,
+    "custom": {
+      "^wd-(.*)": "wot-design-uni/components/wd-$1/wd-$1.vue"
+    }
+  },
+  "pages": [
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/home"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/profile"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/workspace"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/module"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/entries"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/manage"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/preview"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/templates"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/photos"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/photo-editor"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/word"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/word-detail"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/membership"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/help"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/settings"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/article"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/ai"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/download"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/downloads"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/testing"
+    },
+    {
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "轻简履",
+        "navigationStyle": "custom"
+      },
+      "path": "pages/app/drafts"
+    },
+    {
+      "path": "pages/review/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "轻简履 · 方案审阅"
+      }
+    },
+    {
+      "path": "pages/fern/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "青屿 · 轻简履",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/paper/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "素笺 · 轻简履",
+        "disableScroll": true
+      }
+    },
+    {
+      "path": "pages/sky/index",
+      "style": {
+        "navigationStyle": "custom",
+        "navigationBarTitleText": "晴空 · 轻简履",
+        "disableScroll": true
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#F5F7F3"
+  }
+}

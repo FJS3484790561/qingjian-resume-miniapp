@@ -1,0 +1,3 @@
+export type Route='home'|'profile'|'workspace'|'module'|'entries'|'manage'|'preview'|'templates'|'photos'|'photo-editor'|'word'|'word-detail'|'membership'|'help'|'settings'|'article'|'ai'|'download'|'downloads'|'testing'|'drafts'
+export function go(route:Route,params:Record<string,string>={}) {const query=Object.entries(params).map(([k,v])=>`${k}=${encodeURIComponent(v)}`).join('&');const url=`/pages/app/${route}${query?'?'+query:''}`;if(route==='home'||route==='profile')uni.reLaunch({url});else if(getCurrentPages().length>=9)uni.redirectTo({url});else uni.navigateTo({url})}
+export function back() {if(getCurrentPages().length>1)uni.navigateBack();else go('home')}
