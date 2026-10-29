@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-24T09:24:26.776Z",
+  "platform": "WeChat developer tools simulator + local HTTP API + SQLite",
+  "steps": [
+    "Created an independent fictional local sample through the UI; existing drafts retained",
+    "Profile entry and development login made real HTTP requests",
+    "Saved actual text and layout to SQLite with revision 1, excluding photo paths",
+    "Imported the server backup as a new local draft; the original draft remained",
+    "Updated the bound backup using the expected revision; new revision is 2",
+    "Logout revoked the session; login recovered the same development account and saved backup"
+  ],
+  "exceptions": [],
+  "device": {
+    "model": "iPhone 12/13 (Pro)",
+    "width": 390,
+    "height": 844,
+    "SDKVersion": "3.17.4"
+  },
+  "result": "passed"
+}

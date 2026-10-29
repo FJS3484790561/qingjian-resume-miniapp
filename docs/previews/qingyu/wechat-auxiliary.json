@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-24",
+  "platform": "WeChat developer tools simulator",
+  "routes": [],
+  "layouts": [],
+  "interactions": [
+    "Word download error preserved the template-specific return path",
+    "Membership acknowledgement, service error and cancellation; no payment",
+    "Quota explanation and local countdown reached after reset of simulated membership, without deleting drafts",
+    "Membership local success; no payment or order"
+  ],
+  "exceptions": [],
+  "device": {
+    "model": "iPhone 12/13 (Pro)",
+    "windowWidth": 390,
+    "windowHeight": 844,
+    "SDKVersion": "3.17.4"
+  }
+}

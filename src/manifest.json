@@ -1,9 +1,9 @@
 {
   "name": "轻简履",
   "appid": "",
-  "description": "青屿 · 简历小程序前端体验版",
-  "versionName": "0.2.0",
-  "versionCode": "200",
+  "description": "青屿 · 简历制作与私有备份",
+  "versionName": "0.4.0",
+  "versionCode": "400",
   "transformPx": false,
   "vueVersion": "3",
   "mp-weixin": {
@@ -16,7 +16,7 @@
     "usingComponents": true
   },
   "h5": {
-    "title": "轻简履 · 青屿前端体验",
+    "title": "轻简履 · 青屿",
     "router": {
       "mode": "hash"
     }

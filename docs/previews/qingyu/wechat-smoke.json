@@ -1,0 +1,212 @@
+{
+  "date": "2026-10-24",
+  "platform": "WeChat developer tools simulator",
+  "routes": [
+    {
+      "route": "home",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "profile",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "workspace",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "module?module=basic",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "entries?module=work",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "manage",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "preview",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "templates",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "photos",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "photo-editor?selected=5",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "word",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "word-detail?selected=clean",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "membership",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "help",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "settings",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "article?kind=privacy",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "ai",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "download",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "downloads",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "testing",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "route": "drafts",
+      "status": "rendered",
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "layouts": [
+    {
+      "route": "workspace",
+      "rowHeight": 52,
+      "primaryWidth": 141.671875
+    },
+    {
+      "route": "module?module=basic",
+      "rowHeight": 52,
+      "primaryWidth": 288
+    },
+    {
+      "route": "entries?module=work",
+      "rowHeight": 52,
+      "primaryWidth": 350
+    },
+    {
+      "route": "manage",
+      "rowHeight": 52,
+      "primaryWidth": 350
+    },
+    {
+      "route": "preview",
+      "rowHeight": 52,
+      "primaryWidth": 109.671875
+    },
+    {
+      "route": "templates",
+      "rowHeight": 52,
+      "primaryWidth": 252
+    },
+    {
+      "route": "photo-editor?selected=5",
+      "rowHeight": 52,
+      "primaryWidth": 350
+    },
+    {
+      "route": "word-detail?selected=clean",
+      "rowHeight": 52,
+      "primaryWidth": 350
+    },
+    {
+      "route": "membership",
+      "rowHeight": 52,
+      "primaryWidth": 350
+    },
+    {
+      "route": "ai",
+      "rowHeight": 52,
+      "primaryWidth": 350
+    },
+    {
+      "route": "download",
+      "rowHeight": 52,
+      "primaryWidth": 350
+    },
+    {
+      "route": "drafts",
+      "rowHeight": 52,
+      "primaryWidth": 350
+    }
+  ],
+  "interactions": [
+    "Created a separate fictional sample draft through the test-page button",
+    "Native form invalid-email feedback retained input; corrected save and route re-entry restored the saved sample",
+    "Generated a 413x626 PNG from the built-in fictional portrait and applied it to the sample draft",
+    "Edited, applied and undid a local AI-formatting demo; no AI service",
+    "Completed local download simulation; no document file generated"
+  ],
+  "exceptions": [],
+  "device": {
+    "model": "iPhone 12/13 (Pro)",
+    "windowWidth": 390,
+    "windowHeight": 844,
+    "SDKVersion": "3.17.4"
+  },
+  "photoPixels": {
+    "width": 413,
+    "height": 626
+  }
+}

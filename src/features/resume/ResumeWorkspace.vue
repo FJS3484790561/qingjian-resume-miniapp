@@ -7,6 +7,7 @@ import ActionButton from '../../components/ActionButton.vue'
 import { currentResume,updateResume,message,clone } from './store'
 import { definitions,filledModules,plain,sortedEntries,entryHasContent,type ModuleId } from './schema'
 import { go,back } from './navigation'
+import { useUnsavedGuard } from './useUnsavedGuard'
 const props=defineProps<{mode:'workspace'|'entries'|'manage';moduleId?:string}>()
 const resume=currentResume
 const filled=computed(()=>filledModules(resume.value))
@@ -14,13 +15,16 @@ const definition=computed(()=>definitions.find(d=>d.id===props.moduleId)||defini
 const entries=computed(()=>sortedEntries(resume.value,definition.value.id))
 const open=(id:ModuleId)=>go(definitions.find(d=>d.id===id)?.multi?'entries':'module',{module:id})
 const manageOrder=ref([...resume.value.order]);const manageModules=ref(clone(resume.value.modules));const busy=ref(false)
+const manageError=ref('');const moveFeedback=ref('');let confirmingBack=false
 const managed=computed(()=>manageOrder.value.filter(id=>resume.value.modules[id].entries.some(entryHasContent)))
 const initialManage=JSON.stringify({order:manageOrder.value,modules:manageModules.value})
 function dirty(){return props.mode==='manage'&&JSON.stringify({order:manageOrder.value,modules:manageModules.value})!==initialManage}
-async function beforeBack(){if(!dirty())return true;return new Promise<boolean>(resolve=>uni.showModal({title:'模块设置尚未保存',content:'返回会放弃本次名称、顺序和显示设置。',confirmText:'放弃修改',cancelText:'继续调整',success:r=>resolve(r.confirm)}))}
+const unloadGuard=useUnsavedGuard(dirty,'模块设置尚未保存，返回会放弃本次调整。')
+async function beforeBack(){if(!dirty())return true;if(confirmingBack)return false;confirmingBack=true;return new Promise<boolean>(resolve=>uni.showModal({title:'模块设置尚未保存',content:'返回会放弃本次名称、顺序和显示设置。',confirmText:'放弃修改',cancelText:'继续调整',success:r=>{if(r.confirm)unloadGuard.clear();resolve(r.confirm)},fail:()=>resolve(false),complete:()=>{confirmingBack=false}}))}
 defineExpose({isDirty:dirty,requestBack:async()=>{if(await beforeBack())back()}})
-function move(id:ModuleId,step:number){const visible=managed.value;const i=visible.indexOf(id),other=visible[i+step];if(!other)return;const a=manageOrder.value.indexOf(id),b=manageOrder.value.indexOf(other);[manageOrder.value[a],manageOrder.value[b]]=[manageOrder.value[b],manageOrder.value[a]]}
-function saveManage(){if(updateResume(r=>{r.order=[...manageOrder.value];for(const id of r.order){r.modules[id].name=manageModules.value[id].name.trim()||definitions.find(d=>d.id===id)!.name;r.modules[id].visible=manageModules.value[id].visible}})){message('模块设置已保存');uni.navigateBack()}}
+function move(id:ModuleId,step:number){const visible=managed.value;const i=visible.indexOf(id),other=visible[i+step];if(!other)return;const a=manageOrder.value.indexOf(id),b=manageOrder.value.indexOf(other);[manageOrder.value[a],manageOrder.value[b]]=[manageOrder.value[b],manageOrder.value[a]];moveFeedback.value=`${manageModules.value[id].name}已移到第 ${i+step+1} 位，保存后生效`}
+function saveManage(){manageError.value='';if(updateResume(r=>{r.order=[...manageOrder.value];for(const id of r.order){r.modules[id].name=manageModules.value[id].name.trim()||definitions.find(d=>d.id===id)!.name;r.modules[id].visible=manageModules.value[id].visible}})){message('模块设置已保存');unloadGuard.clear();back()}else manageError.value='模块设置未保存，当前调整仍保留，请重试。'}
+function toggleChronological(){if(updateResume(r=>{r.chronological=!r.chronological}))message(resume.value.chronological?'已按时间正序排列':'已按时间倒序排列')}
 function manageName(id:ModuleId,event:any){manageModules.value[id].name=String(event.detail.value)}
 function manageVisible(id:ModuleId,event:any){manageModules.value[id].visible=Boolean(event.detail.value)}
 let generateTimer:ReturnType<typeof setTimeout>|undefined
@@ -47,10 +51,12 @@ const summary=(id:ModuleId)=>{const e=resume.value.modules[id].entries.find(entr
    </template>
    <template v-else>
     <text class="eyebrow">MAKE IT YOURS.</text><text class="q-title">安排你的表达顺序。</text><text class="q-description">修改名称、调整位置，或暂时隐藏某一部分。只列出已填写的模块。</text>
-    <view v-if="!managed.length" class="q-empty q-card"><AppIcon name="folder" :size="36"/><text>还没有可管理的模块</text><text class="q-small">先去填写一部分内容，再来安排顺序。</text></view>
+    <view v-if="manageError" class="q-error-summary" role="alert"><text>{{manageError}}</text></view>
+    <text v-if="moveFeedback" class="q-field-hint" aria-live="polite">{{moveFeedback}}</text>
+    <view v-if="!managed.length" class="q-empty q-card"><AppIcon name="folder" :size="36"/><text>还没有可管理的模块</text><text class="q-small">先去填写一部分内容，再来安排顺序。</text><button role="button" class="q-text-button" @click="go('workspace')">去填写内容</button></view>
     <view v-for="(id,index) in managed" :key="id" class="q-manage-card q-card"><view class="q-between"><input :value="manageModules[id].name" maxlength="20" :aria-label="'模块名称：'+resume.modules[id].name" @input="manageName(id,$event)"/><switch :checked="manageModules[id].visible" color="#346c57" :aria-label="'显示'+manageModules[id].name" @change="manageVisible(id,$event)"/></view><view class="q-manage-actions"><text class="q-small">{{manageModules[id].visible?'显示在简历中':'已隐藏，内容仍保留'}}</text><button role="button" :disabled="index===0" :aria-label="'上移'+manageModules[id].name" @click="move(id,-1)">上移 ↑</button><button role="button" :disabled="index===managed.length-1" :aria-label="'下移'+manageModules[id].name" @click="move(id,1)">下移 ↓</button></view></view>
    </template>
   </view></scroll-view>
-  <template #footer><template v-if="mode==='workspace'"><view class="q-workspace-tools"><button role="button" @click="go('manage')"><AppIcon name="grid" :size="20"/><text>模块管理</text></button><button role="button" @click="updateResume(r=>{r.chronological=!r.chronological});message(resume.chronological?'已按时间正序排列':'已按时间倒序排列')"><AppIcon name="clock" :size="20"/><text>{{resume.chronological?'时间正序':'时间倒序'}}</text></button><button role="button" @click="go('ai')"><AppIcon name="sparkle" :size="20"/><text>智能优化</text></button></view><ActionButton :label="busy?'正在排版':'生成简历'" :loading="busy" arrow @click="generate"/></template><ActionButton v-else-if="mode==='entries'" :label="'+ 添加更多'+resume.modules[definition.id].name" @click="go('module',{module:definition.id})"/><ActionButton v-else label="保存模块设置" @click="saveManage"/></template>
+  <template #footer><view class="q-footer-row"><view v-if="mode==='workspace'" class="q-workspace-tools"><button role="button" @click="go('manage')"><AppIcon name="grid" :size="20"/><text>模块管理</text></button><button role="button" @click="toggleChronological"><AppIcon name="clock" :size="20"/><text>{{resume.chronological?'时间正序':'时间倒序'}}</text></button><button role="button" @click="go('ai')"><AppIcon name="sparkle" :size="20"/><text>智能优化</text></button></view><view class="q-footer-primary"><ActionButton v-if="mode==='workspace'" :label="busy?'正在排版':'生成简历'" :loading="busy" arrow @click="generate"/><ActionButton v-else-if="mode==='entries'" :label="'+ 添加更多'+resume.modules[definition.id].name" @click="go('module',{module:definition.id})"/><ActionButton v-else label="保存模块设置" @click="saveManage"/></view></view></template>
  </AppFrame>
 </template>

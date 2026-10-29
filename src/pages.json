@@ -23,6 +23,14 @@
       "path": "pages/app/profile"
     },
     {
+      "path": "pages/app/cloud",
+      "style": {
+        "disableScroll": true,
+        "navigationBarTitleText": "账号与简历备份",
+        "navigationStyle": "custom"
+      }
+    },
+    {
       "style": {
         "disableScroll": true,
         "navigationBarTitleText": "轻简履",

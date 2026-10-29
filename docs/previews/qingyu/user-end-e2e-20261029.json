@@ -1,0 +1,42 @@
+{
+  "date": "2026-10-29T03:52:47.728Z",
+  "platform": "WeChat developer tools simulator",
+  "backend": "Tencent Cloud Qingyu API after restart/read-only hardening; SSH loopback tunnel",
+  "steps": [
+    "Correct AppID; real WeChat login enabled; development identity and AI disabled",
+    "Native wx.login code was exchanged by the actual backend; authenticated provider is wechat",
+    "Private photo and resume persisted; restore created a new draft without overwriting its source",
+    "UI generated a real PDF with authenticated binary download",
+    "UI generated a real DOCX with authenticated binary download",
+    "Real file records are visible in the WeChat UI",
+    "Logout invalidated the old session; a new real WeChat login recovered private persisted data"
+  ],
+  "files": [
+    {
+      "format": "pdf",
+      "bytes": 197620,
+      "authenticatedDownload": true,
+      "nativeDownload": true
+    },
+    {
+      "format": "docx",
+      "bytes": 18881,
+      "authenticatedDownload": true,
+      "nativeDownload": true
+    }
+  ],
+  "exceptions": [],
+  "device": {
+    "model": "iPhone 12/13 (Pro)",
+    "width": 390,
+    "height": 844,
+    "sdk": "3.17.5"
+  },
+  "result": "passed",
+  "notVerified": [
+    "Physical phone and public HTTPS domain",
+    "Word/WPS rendering",
+    "Native file viewer, album permission and production payment",
+    "AI provider intentionally deferred"
+  ]
+}

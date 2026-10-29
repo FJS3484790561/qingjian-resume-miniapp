@@ -9,7 +9,7 @@ function chunks(html:string,max=460):string[]{
  for(const paragraph of paragraphs){const text=plain(paragraph);if(text.length<=max){result.push(paragraph);continue}for(let i=0;i<text.length;i+=max)result.push('<p>'+escapeHtml(text.slice(i,i+max)).replace(/\n/g,'<br/>')+'</p>')}
  return result
 }
-export function documentBlocks(resume:Resume):DocumentBlock[]{
+export function documentBlocks(resume:Resume,splitLong=true):DocumentBlock[]{
  const result:DocumentBlock[]=[]
  for(const id of resume.order){const module=resume.modules[id];if(!module.visible)continue;const def=definitions.find(d=>d.id===id)!;const entries=sortedEntries(resume,id)
  for(const [index,entry] of entries.entries()){
@@ -21,7 +21,7 @@ export function documentBlocks(resume:Resume):DocumentBlock[]{
  if(['skills','certificates','interests'].includes(id))html='<ul>'+Object.entries(entry).filter(([k,v])=>k.startsWith('item')&&v.trim()).map(([,v])=>'<li>'+escapeHtml(v)+'</li>').join('')+'</ul>'
  if(id==='exam'){meta=entry.major||'';html='<p>'+[entry.score&&'总分：'+escapeHtml(entry.score),...Array.from({length:5},(_,i)=>[entry['subject'+i],entry['score'+i]].filter(Boolean).map(escapeHtml).join('：'))].filter(Boolean).join('<br/>')+'</p>'}
  if(id==='letter')meta=[entry.author,entry.date].filter(Boolean).join(' · ')
- const parts=chunks(html)
+ const parts=splitLong?chunks(html):[html]
  parts.forEach((part,p)=>result.push({key:entry.id+'-'+p,section:index===0&&p===0?module.name:p>0?module.name+'（续）':'',title:p===0?title:'',meta:p===0?meta:'',html:part}))
  }
  }

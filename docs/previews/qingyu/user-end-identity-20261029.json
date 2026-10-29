@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-29T03:39:47.922Z",
+  "platform": "WeChat developer tools simulator",
+  "backend": "Tencent Cloud Qingyu API, port 8790, through authenticated SSH loopback tunnel",
+  "steps": [
+    "Correct AppID; real WeChat login enabled; development identity and AI disabled",
+    "Created a separate fictional draft and applied a real 413x626 sample PNG; existing drafts retained",
+    "Native wx.login code was exchanged by the actual backend; authenticated provider is wechat",
+    "Private photo and resume persisted; restore created a new draft without overwriting its source"
+  ],
+  "files": [],
+  "exceptions": [],
+  "device": {
+    "model": "iPhone 12/13 (Pro)",
+    "width": 390,
+    "height": 844,
+    "sdk": "3.17.5"
+  },
+  "result": "passed",
+  "notVerified": [
+    "Document engine still being installed; file verification runs separately"
+  ]
+}

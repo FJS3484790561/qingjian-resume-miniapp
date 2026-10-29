@@ -9,3 +9,9 @@ project.private.config.json
 *.tsbuildinfo
 coverage/
 Thumbs.db
+server/data/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+__pycache__/
+*.pyc

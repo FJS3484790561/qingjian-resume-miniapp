@@ -1,0 +1,20 @@
+<script setup lang="ts">
+import {ref,watch,onBeforeUnmount} from 'vue'
+import {onShow,onHide} from '@dcloudio/uni-app'
+import {account,getExports,downloadExport,deleteExport,cancelExport,sameSession,type ExportRecord} from './backend'
+import {go} from './navigation'
+const rows=ref<ExportRecord[]>([]),busy=ref(false),error=ref(''),feedback=ref('')
+let generation=0,visible=true,timer:ReturnType<typeof setTimeout>|undefined
+const labels={queued:'排队中',running:'生成中',complete:'已生成',failed:'生成失败',cancelled:'已取消'}
+watch(()=>account.session?.user.id,()=>{generation++;clearTimeout(timer);rows.value=[];busy.value=false;error.value='';feedback.value='';if(visible)void refresh()})
+async function refresh(clearError=true){
+ if(busy.value)return;clearTimeout(timer);busy.value=true;if(clearError)error.value='';const version=generation,token=account.session?.token
+ try{if(!token){rows.value=[];return}const result=await getExports();sameSession(token);if(version===generation&&visible){rows.value=result.exports;if(rows.value.some(r=>['queued','running'].includes(r.state)))timer=setTimeout(()=>void refresh(),2500)}}catch(e){if(version===generation&&visible)error.value=(e as Error).message}finally{if(version===generation&&visible)busy.value=false}
+}
+onShow(()=>{visible=true;void refresh()})
+function stop(){visible=false;generation++;busy.value=false;clearTimeout(timer)}onHide(stop);onBeforeUnmount(stop)
+async function open(row:ExportRecord){if(busy.value)return;busy.value=true;error.value='';const version=generation;try{await downloadExport(row,()=>visible&&version===generation);if(version===generation&&visible)feedback.value='已发起文件下载／打开，可以再次下载。'}catch(e){if(version===generation&&visible)error.value=(e as Error).message}finally{if(version===generation&&visible)busy.value=false}}
+function remove(row:ExportRecord){if(busy.value)return;const token=account.session?.token,version=generation;uni.showModal({title:'删除文件及记录？',content:'「'+row.title+'」生成的文件将永久删除，本机简历保留。需要时可重新生成。',confirmText:'删除文件',success:r=>{if(r.confirm)void mutate(async()=>{sameSession(token);if(!visible||version!==generation)throw new Error('页面或账号已变化，未执行删除；请重新确认');return deleteExport(row.id)},'文件和记录已删除，本机简历保留。')}})}
+async function mutate(work:()=>Promise<unknown>,text:string){if(busy.value)return;busy.value=true;error.value='';const version=generation;try{await work();if(version===generation&&visible)feedback.value=text}catch(e){if(version===generation&&visible)error.value=(e as Error).message}finally{if(version===generation&&visible){busy.value=false;await refresh(false)}}}
+</script>
+<template><view class="q-export-history"><view class="q-section-head"><text>真实文件 · 当前账号</text><button class="q-text-button" :disabled="busy" @click="refresh()">{{busy?'处理中…':'刷新'}}</button></view><text v-if="error" class="q-error-summary" role="alert">{{error}}</text><text v-if="feedback" class="q-field-hint" role="status">{{feedback}}</text><view v-if="!account.session" class="q-card q-content-card"><text>连接账号后查看真实文件。下方模拟记录只保存在本机。</text><button class="q-text-button" @click="go('cloud')">去连接账号 →</button></view><view v-else-if="!rows.length" class="q-card q-empty"><text>还没有真实文件记录</text><button class="q-text-button" @click="go('download')">生成第一份文档 →</button></view><view v-for="row in rows" :key="row.id" class="q-card q-content-card"><view class="q-between"><text class="q-row-title">{{row.title}}</text><text class="q-badge">{{labels[row.state]}}</text></view><text class="q-small">{{row.format.toUpperCase()}} · {{new Date(row.createdAt).toLocaleString('zh-CN')}}<template v-if="row.size"> · {{Math.ceil(row.size/1024)}} KB</template></text><text v-if="row.error" class="q-small">{{row.error}}</text><view class="q-inline-actions"><button v-if="row.state==='complete'" class="q-outline-button" :disabled="busy" @click="open(row)">下载／打开</button><button v-if="row.state==='queued'||row.state==='running'" class="q-text-button" :disabled="busy" @click="mutate(()=>cancelExport(row.id),'已请求取消，请查看任务状态。')">取消生成</button><button v-else class="q-text-button q-danger-text" :disabled="busy" @click="remove(row)">删除记录</button></view></view></view></template>

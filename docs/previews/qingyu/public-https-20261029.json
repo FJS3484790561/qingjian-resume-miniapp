@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-29",
+  "baseUrl": "https://resume.roomai.top",
+  "tls": {
+    "version": "TLSv1.3",
+    "subjectAltName": [
+      [
+        "DNS",
+        "resume.roomai.top"
+      ]
+    ],
+    "notAfter": "Jan 27 06:12:56 2027 GMT",
+    "verified": true
+  },
+  "checks": [
+    {
+      "path": "/health",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/v1/resumes",
+      "status": 401,
+      "expected": 401
+    },
+    {
+      "path": "/v1/exports",
+      "status": 401,
+      "expected": 401
+    },
+    {
+      "path": "/v1/ai/service",
+      "status": 200,
+      "expected": 200
+    },
+    {
+      "path": "/v1/auth/development",
+      "method": "POST",
+      "status": 404,
+      "expected": 404
+    }
+  ],
+  "developmentIdentity": false,
+  "aiConfigured": false,
+  "httpRedirect": {
+    "status": 301,
+    "location": "https://resume.roomai.top/health"
+  },
+  "renewalDryRun": "passed with Nginx deploy hook"
+}

@@ -1,0 +1,64 @@
+{
+  "date": "2026-10-24",
+  "version": "0.4.0",
+  "platform": "Codex in-app browser H5 + local HTTP API + SQLite",
+  "fictionalData": true,
+  "observed": [
+    "development login",
+    "actual PDF generation and browser download",
+    "canvas sample photo applied to independent fictional draft",
+    "private photo backup",
+    "restore into new draft with original retained",
+    "DOCX generation with restored photo and browser download",
+    "authenticated history separates real and mock records",
+    "server restart followed by successful UI refresh with persisted real file records"
+  ],
+  "downloadChecks": {
+    "pdf": {
+      "openedByParser": true,
+      "pages": 2,
+      "last35thParagraph": true
+    },
+    "docx": {
+      "validOOXML": true,
+      "expectedText": true,
+      "photoEmbedded": true
+    }
+  },
+  "realEngineQA": [
+    {
+      "template": "clear",
+      "pages": 4,
+      "all35Paragraphs": true,
+      "finalMarker": true
+    },
+    {
+      "template": "space",
+      "pages": 4,
+      "all35Paragraphs": true,
+      "finalMarker": true
+    },
+    {
+      "template": "order",
+      "pages": 5,
+      "all35Paragraphs": true,
+      "finalMarker": true
+    }
+  ],
+  "visualQA": "All 13 PDF pages rendered to PNG and visually checked; three layouts, cover variants, emphasis, lists and photo. No observed clipping. DOCX structure checked, not Word/WPS visual acceptance.",
+  "viewport": {
+    "observedDOMWidth": 720,
+    "documentWidth": 720,
+    "minObservedButtonHeight": 44,
+    "phoneOverride": "375 requested via browser capability but DOM continued to report 720; not counted as 375px validation"
+  },
+  "notVerified": [
+    "real WeChat identity login",
+    "new WeChat download/openDocument interaction",
+    "phone network and permissions",
+    "Word/WPS actual visual rendering",
+    "production deployment"
+  ],
+  "result": "passed within stated local H5 and real-engine scope",
+  "clientLifecycle": "Late native file download is prevented from opening a document after the page hides; covered by regression test."
+}
