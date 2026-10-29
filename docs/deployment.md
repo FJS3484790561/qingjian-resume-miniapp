@@ -22,7 +22,7 @@
 - 微信公众平台核对 AppID `wxdccead0ec32190d0`，管理员本人扫码后，request 与 downloadFile 均显示 `https://resume.roomai.top`；未增加不需要的 socket/uploadFile/WebView 域名。截图见 [域名配置](previews/qingyu/wechat-domains-20261029.png)。
 - 生产构建默认从 `config/public-api.json` 取 HTTPS 地址，显式 VITE_API_BASE_URL 仍优先。本机忽略的 .env 已同步公开地址，服务端私有项保留。
 
-运行 `npm run wechat:open`，重建可加 `-- -Build`。脚本读取实际构建 API、核对 AppID 和健康状态，HTTPS 模式开启 urlCheck，不启动 SSH。微信工具有域名缓存时，在「详情 → 项目配置」刷新域名信息并重新编译；本轮在刷新前确实被旧列表阻挡，刷新后完整闭环通过。保留 storage，不清用户草稿。
+运行 `npm run wechat:open`，重建用 `npm run wechat:rebuild`；重建后脚本关闭本项目、只清 compile 缓存再打开，避免覆盖 JS/WXML 后继续使用旧运行状态。独立 npm 命令避免本机 npm.ps1 丢失转发的 `-Build`。脚本读取实际构建 API、核对 AppID 和健康状态，HTTPS 模式开启 urlCheck，不启动 SSH。微信工具有域名缓存时，在「详情 → 项目配置」刷新域名信息并重新编译；本轮在刷新前确实被旧列表阻挡，刷新后完整闭环通过。保留 storage，不清用户草稿。
 
 历史 SSH 回环入口仅在显式构建 `http://127.0.0.1:8787` 时使用。该模式属于本机调试、关闭本地校验；不要把它当手机地址。当前 HTTPS 测试没有 8787 监听或 SSH 隧道依赖。
 

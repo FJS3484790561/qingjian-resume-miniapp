@@ -2,7 +2,7 @@
 
 ## 当前验收入口（2026-10-29）
 
-运行 `npm run wechat:open` 打开青屿项目，重建可加 `-- -Build`。默认直接连接 `https://resume.roomai.top`，合法域名校验开启，不依赖本机 SSH 或 server:dev。AppID `wxdccead0ec32190d0`，不是历史 sky 原型页。若微信工具仍缓存旧域名，在「详情 → 项目配置」刷新域名信息并重新编译；不要关闭校验来代替修复。
+运行 `npm run wechat:open` 打开青屿项目，重建使用 `npm run wechat:rebuild`（构建后只清编译缓存并重新打开，保留本机草稿与登录）。默认直接连接 `https://resume.roomai.top`，合法域名校验开启，不依赖本机 SSH 或 server:dev。AppID `wxdccead0ec32190d0`，不是历史 sky 原型页。若微信工具仍缓存旧域名，在「详情 → 项目配置」刷新域名信息并重新编译；不要关闭校验来代替修复。
 
 以下“已验证”由开发者在 **390×844 微信模拟器** 实际完成，**不是用户已签收或真机验收**：
 

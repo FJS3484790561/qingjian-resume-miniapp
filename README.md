@@ -6,7 +6,7 @@
 
 ## 在微信开发者工具中测试
 
-**2026-10-29 公网 HTTPS 联调入口：**运行 `npm run wechat:open`；重新构建用 `npm run wechat:open -- -Build`。默认 API 为 `https://resume.roomai.top`，request/downloadFile 合法域名已在正确微信账号保存。脚本核对实际构建地址、AppID 和生产健康状态，开启域名校验并打开工具；不依赖 SSH 或本机后端，不清草稿。HTTPS 就绪不代表真机或上线验收完成。
+**2026-10-29 公网 HTTPS 联调入口：**运行 `npm run wechat:open`；重新构建用 `npm run wechat:rebuild`。后者完成构建后关闭本项目、只清编译缓存并重新打开，保留草稿、文件与登录数据。使用独立命令避免本机 PowerShell 的 npm.ps1 吞掉转发的 `-Build` 参数。默认 API 为 `https://resume.roomai.top`，request/downloadFile 合法域名已在正确微信账号保存。脚本核对实际构建地址、AppID 和生产健康状态，开启域名校验并打开工具；不依赖 SSH 或本机后端。HTTPS 就绪不代表真机或上线验收完成。
 
 AppID：`wxdccead0ec32190d0`。技术栈保留 uni-app Vue 3 + TypeScript + Wot Design Uni，包管理器 npm。
 

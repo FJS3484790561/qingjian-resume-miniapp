@@ -53,6 +53,14 @@ try {
     if (!$private.PSObject.Properties['setting']) { $private | Add-Member -NotePropertyName setting -NotePropertyValue ([pscustomobject]@{}) }
     $private.setting | Add-Member -NotePropertyName urlCheck -NotePropertyValue (!$usingTunnel) -Force
     [System.IO.File]::WriteAllText($privatePath, ($private | ConvertTo-Json -Depth 30), [System.Text.UTF8Encoding]::new($false))
+    if ($Build) {
+        # Replacing generated JS/WXML in an open IDE can leave a stale runtime.
+        # Restart this project and clear compile only; keep drafts/files/login.
+        & $CliPath close --project $project
+        if ($LASTEXITCODE -ne 0) { throw '构建已完成，但项目关闭失败；请关闭本项目后重试。' }
+        & $CliPath cache --clean compile --project $project
+        if ($LASTEXITCODE -ne 0) { throw '编译缓存刷新失败，已停止打开；本机数据保留。' }
+    }
     & $CliPath open --project $project
     if ($LASTEXITCODE -ne 0) { throw '开发者工具打开失败，请查看 CLI 输出；远程服务保留。' }
     Write-Host ('微信开发者工具已打开，实际构建 API：' + $apiUrl)

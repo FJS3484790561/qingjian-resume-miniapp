@@ -2,6 +2,14 @@
 
 最新更新：2026-10-29，版本 0.4.0。用户已选 A 青屿。本文保留各轮实际结果，不用历史候选测试替代新版本验证；历史三方案记录在 [validation-proposals.md](validation-proposals.md)。
 
+## 2026-10-29 首页点击无响应与启动修正
+
+- 用户截图中的首页“开始制作”“我的”无跳转已通过原生鼠标复现；官方 SDK tap 当时也未立即跳转。临时诊断显示后续 go/back 回调最终释放锁，未证实永久锁死；重新编译后一度恢复，继续操作仍出现延迟。本轮没有证据证明某个业务函数就是唯一根因。
+- 正式重新构建 → 关闭本项目 → CLI `cache --clean compile` → 重开后，原生鼠标实际进入简历信息、基本信息并无修改返回；新启动命令再次重建后，实际点击首页→我的→首页→简历样式→商务筛选→返回。每步以完成显示的页面/选中状态核实，没有把过渡截图当作完成。截图：[制作页](previews/qingyu/native-click-workspace-20261029.png)、[我的](previews/qingyu/native-click-profile-20261029.png)、[样式页](previews/qingyu/native-click-templates-20261029.png)、[商务筛选](previews/qingyu/native-click-filter-20261029.png)。
+- 发现明确的重建命令问题：本机 `npm` 解析为 `C:\nvm4w\nodejs\npm.ps1`，原 `npm run wechat:open -- -Build` 的实际脚本命令不含 `-Build`，没有构建输出；`npm.cmd` 直接传参能运行构建。现新增独立 `wechat:rebuild`，通过普通 `npm run wechat:rebuild` 已实际执行包含 `-Build` 的命令，构建/close/cleancache/open 均返回成功。启动脚本仅在重建时刷新编译状态。
+- `npm test` **57/57**、`npm run type-check`、微信构建通过；源码导航未变。临时构建 getter/console 已被正式构建覆盖；本轮未改后端、未重跑全量服务器闭环。
+- 本轮只清编译缓存，不清 storage/file/auth；重开后“我的简历”仍为原有 **14 份**。没有编辑/删除草稿、上传照片、调用 AI 或支付。AppID 和公开 HTTPS 地址保持原配置，域名校验开启；工具的预加载/worker 非阻断警告仍存在。模拟器恢复不等于用户或真机验收。
+
 ## 2026-10-29 公网 HTTPS 与微信域名校验
 
 - DNSPod resume A → 49.233.202.228，TTL600；保留 @/www。公共 DNS 已解析，子域单独 Let's Encrypt 证书 SAN/链验证成功、TLS1.3，到期 2027-01-27 06:12:56 UTC；HTTP health 301 到 HTTPS。`certbot renew --cert-name resume.roomai.top --dry-run --run-deploy-hooks` 成功，Nginx 检查后 reload。
